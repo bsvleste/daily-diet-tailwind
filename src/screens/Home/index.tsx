@@ -2,10 +2,11 @@ import { Image, SectionList, Text, TouchableOpacity, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Logo from '@assets/Logo.png'
 import UserImg from '@assets/User.png'
-import { ArrowUpRight, Plus } from 'phosphor-react-native'
+import { ArrowUpRight, Circle, Plus } from 'phosphor-react-native'
 import { useState } from 'react'
 import { HistoryFoodByDay } from '@dtos/HistoryFoodBayDay'
 import { Button } from '@components/Button'
+import colors from 'tailwindcss/colors'
 export function Home() {
   const [info, setInfo] = useState<HistoryFoodByDay[]>([
     {
@@ -56,26 +57,44 @@ export function Home() {
           onPress={() => console.log('clicou')}
         />
       </View>
-      <View>
-        <SectionList
-          sections={info}
-          keyExtractor={(item) => item.hour}
-          renderItem={({ item }) => (
-            <View>
-              <Text>{item.food}</Text>
+
+      <SectionList
+        sections={info}
+        keyExtractor={(item) => item.hour}
+        renderItem={({ item }) => (
+          <TouchableOpacity className="mb-4 h-12 w-full flex-row justify-between rounded-md border border-gray-500 px-5">
+            <View className="w-full flex-row items-center gap-2">
+              <Text className="font-heading text-sm">{item.hour}</Text>
+              <Text className=" text-gray-600">|</Text>
+              <Text className="truncate font-body text-2xl text-gray-600">
+                {item.food}
+              </Text>
             </View>
-          )}
-          renderSectionHeader={({ section }) => <Text>{section.title}</Text>}
-          contentContainerStyle={
-            [].length === 0 && { justifyContent: 'center' }
+            <View className="items-center justify-center">
+              <Circle
+                size={22}
+                weight="fill"
+                color={item.status ? colors.green[300] : colors.red[300]}
+              />
+            </View>
+          </TouchableOpacity>
+        )}
+        renderSectionHeader={({ section }) => (
+          <Text className="font-heading text-xl">{section.title}</Text>
+        )}
+        contentContainerStyle={
+          [].length === 0 && {
+            justifyContent: 'center',
+            marginTop: 24,
+            paddingBottom: 64,
           }
-          ListEmptyComponent={() => (
-            <View>
-              <Text>Lista vazia</Text>
-            </View>
-          )}
-        />
-      </View>
+        }
+        ListEmptyComponent={() => (
+          <View>
+            <Text>Lista vazia</Text>
+          </View>
+        )}
+      />
     </View>
   )
 }
