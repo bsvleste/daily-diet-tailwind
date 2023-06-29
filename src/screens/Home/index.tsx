@@ -1,5 +1,4 @@
 import { Image, SectionList, Text, TouchableOpacity, View } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Logo from '@assets/Logo.png'
 import UserImg from '@assets/User.png'
 import { ArrowUpRight, Circle, Plus } from 'phosphor-react-native'
@@ -7,7 +6,10 @@ import { useState } from 'react'
 import { HistoryFoodByDay } from '@dtos/HistoryFoodBayDay'
 import { Button } from '@components/Button'
 import colors from 'tailwindcss/colors'
+import { Container } from '@components/Container'
+import { useNavigation } from '@react-navigation/native'
 export function Home() {
+  const { navigate } = useNavigation()
   const [info, setInfo] = useState<HistoryFoodByDay[]>([
     {
       title: '16/05/2023',
@@ -25,10 +27,11 @@ export function Home() {
       data: [{ food: 'x-tudo', hour: '12:00', status: false }],
     },
   ])
-  const insets = useSafeAreaInsets()
-  const paddingTop = insets.top + 20
+  function handleGoToStatistics() {
+    navigate('statistics')
+  }
   return (
-    <View className="flex-1 bg-gray-100 px-4 " style={{ paddingTop }}>
+    <Container>
       <View className="flex-row items-center justify-between">
         <Image source={Logo} alt="logo dailayt" />
         <TouchableOpacity>
@@ -39,7 +42,7 @@ export function Home() {
         <View className="items-end">
           <TouchableOpacity
             className="mr-2 mt-2"
-            onPress={() => console.log('pressiounou')}
+            onPress={handleGoToStatistics}
           >
             <ArrowUpRight size={24} weight="bold" color="#000" />
           </TouchableOpacity>
@@ -95,6 +98,6 @@ export function Home() {
           </View>
         )}
       />
-    </View>
+    </Container>
   )
 }

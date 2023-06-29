@@ -2,6 +2,7 @@
 import { Text, TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import { IconProps } from 'phosphor-react-native'
 import clsx from 'clsx'
+import colors from 'tailwindcss/colors'
 export type IconButtonProps = (props: IconProps) => JSX.Element
 
 type ButtonProps = TouchableOpacityProps & {
@@ -25,7 +26,10 @@ export function Button({
       })}
       {...props}
     >
-      <Icon size={24} color={background === 'primary' ? '#fff' : '#1B1D1E'} />
+      <Icon
+        size={24}
+        color={background === 'primary' ? colors.white : '#1B1D1E'}
+      />
       <Text
         className={clsx('ml-4 font-heading text-sm ', {
           'text-white': background === 'primary',
