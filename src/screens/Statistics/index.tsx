@@ -32,14 +32,14 @@ export function Statistics() {
           <Text className="font-body">refeições registradas</Text>
         </View>
 
-        <View className="mt-8 flex w-full flex-row items-center justify-center gap-[10px]">
-          <View className="h-28 flex-grow flex-col items-center justify-center bg-green-300 ">
+        <View className="mt-8 w-full flex-row items-center justify-center gap-x-2">
+          <View className="h-28 flex-1 flex-col items-center justify-center bg-green-300 ">
             <Text className="font-heading text-xl">99</Text>
             <Text className="text-center font-body text-base">
               refeições dentro da dieta
             </Text>
           </View>
-          <View className="h-28 flex-grow flex-col items-center justify-center bg-red-300 ">
+          <View className="h-28 flex-1 flex-col items-center justify-center bg-red-300 ">
             <Text className="font-heading text-xl">99</Text>
             <Text className="text-center  font-body text-base">
               refeições fora da dieta
