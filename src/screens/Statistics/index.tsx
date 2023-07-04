@@ -18,6 +18,35 @@ export function Statistics() {
           <Text className="font-body ">das refeições dentro da dieta</Text>
         </View>
       </View>
+
+      <View className="w-ful mt-16 items-center justify-center px-4">
+        <Text className="font-heading">Estatisticas Gerais</Text>
+        <View className="mt-4 h-24 w-full flex-col items-center justify-center rounded-md bg-gray-400">
+          <Text className="font-heading text-xl">22</Text>
+          <Text className="font-body">
+            melhor sequencia de pratos dentro da dieta
+          </Text>
+        </View>
+        <View className="mt-4 h-24 w-full flex-col items-center justify-center rounded-md bg-gray-400">
+          <Text className="font-heading text-xl">99</Text>
+          <Text className="font-body">refeições registradas</Text>
+        </View>
+
+        <View className="mt-8 flex w-full flex-row items-center justify-center gap-[10px]">
+          <View className="h-28 flex-grow flex-col items-center justify-center bg-green-300 ">
+            <Text className="font-heading text-xl">99</Text>
+            <Text className="text-center font-body text-base">
+              refeições dentro da dieta
+            </Text>
+          </View>
+          <View className="h-28 flex-grow flex-col items-center justify-center bg-red-300 ">
+            <Text className="font-heading text-xl">99</Text>
+            <Text className="text-center  font-body text-base">
+              refeições fora da dieta
+            </Text>
+          </View>
+        </View>
+      </View>
     </View>
   )
 }
