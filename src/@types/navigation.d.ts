@@ -5,6 +5,9 @@ export declare global {
     interface RootParamList {
       home: undefined
       statistics: undefined
+      snack: undefined
+      inside: undefined
+      outside: undefined
     }
   }
 }

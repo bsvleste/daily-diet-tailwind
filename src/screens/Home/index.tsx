@@ -5,9 +5,9 @@ import { ArrowUpRight, Circle, Plus } from 'phosphor-react-native'
 import { useState } from 'react'
 import { HistoryFoodByDay } from '@dtos/HistoryFoodBayDay'
 import { Button } from '@components/Button'
-import colors from 'tailwindcss/colors'
 import { Container } from '@components/Container'
 import { useNavigation } from '@react-navigation/native'
+import color from 'tailwindcss/colors'
 export function Home() {
   const { navigate } = useNavigation()
   const [info, setInfo] = useState<HistoryFoodByDay[]>([
@@ -30,6 +30,9 @@ export function Home() {
   function handleGoToStatistics() {
     navigate('statistics')
   }
+  function handleGotoSnack() {
+    navigate('snack')
+  }
   return (
     <Container>
       <View className="flex-row items-center justify-between">
@@ -44,7 +47,7 @@ export function Home() {
             className="mr-2 mt-2"
             onPress={handleGoToStatistics}
           >
-            <ArrowUpRight size={24} weight="bold" color="#000" />
+            <ArrowUpRight size={24} weight="bold" color={color.green[300]} />
           </TouchableOpacity>
         </View>
         <View className=" flex-col items-center justify-center">
@@ -55,9 +58,10 @@ export function Home() {
       <View className="mt-8">
         <Text>Refeições</Text>
         <Button
+          hasIcon
           icon={Plus}
           title="NovaRefeição"
-          onPress={() => console.log('clicou')}
+          onPress={handleGotoSnack}
         />
       </View>
 
@@ -77,7 +81,7 @@ export function Home() {
               <Circle
                 size={22}
                 weight="fill"
-                color={item.status ? colors.green[300] : colors.red[300]}
+                color={item.status ? color.green[300] : color.red[300]}
               />
             </View>
           </TouchableOpacity>

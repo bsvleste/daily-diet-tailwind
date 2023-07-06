@@ -7,7 +7,7 @@ export type IconButtonProps = (props: IconProps) => JSX.Element
 
 type ButtonProps = TouchableOpacityProps & {
   icon: IconButtonProps
-
+  hasIcon?: boolean
   background?: 'primary' | 'secundary'
   title: string
 }
@@ -16,6 +16,7 @@ export function Button({
   icon: Icon,
   background = 'primary',
   title,
+  hasIcon = false,
   ...props
 }: ButtonProps) {
   return (
@@ -26,10 +27,12 @@ export function Button({
       })}
       {...props}
     >
-      <Icon
-        size={24}
-        color={background === 'primary' ? colors.white : '#1B1D1E'}
-      />
+      {hasIcon && (
+        <Icon
+          size={24}
+          color={background === 'primary' ? colors.white : '#1B1D1E'}
+        />
+      )}
       <Text
         className={clsx('ml-4 font-heading text-sm ', {
           'text-white': background === 'primary',
