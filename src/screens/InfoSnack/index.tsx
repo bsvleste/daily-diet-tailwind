@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { ButtonIcon } from '@components/Button/ButtonIcon'
@@ -28,7 +29,7 @@ export function InfoSnack() {
     try {
       setIsLoading(true)
       const response = await getSnackByDay(snackId)
-      console.log(response[0].food)
+
       setSnack(response[0])
     } catch (error) {
       console.log(error)

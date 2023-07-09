@@ -41,7 +41,7 @@ export function Home() {
     try {
       setIsloading(true)
       const percentege = await getSnackPerCentege()
-      setPercentageOffSnacks(percentege!)
+      setPercentageOffSnacks(percentege?.percentage!)
       const data = await createHistoryStorage()
       setSnacks(data)
     } catch (error) {
@@ -114,7 +114,7 @@ export function Home() {
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() => handlegoToSnackInfo(item.id)}
-              className="mb-4 h-12 w-full flex-row justify-between rounded-md border border-gray-500 px-5"
+              className="mb-4 h-12 w-full flex-row justify-between rounded-md border border-gray-400 px-5"
             >
               <View className="w-full flex-row items-center gap-2">
                 <Text className="font-heading text-sm">{item.hour}</Text>

@@ -30,9 +30,9 @@ export function CreateSnack() {
     }
   }
   return (
-    <View className="flex-1">
+    <View className="flex-1 ">
       <Header />
-      <View className="mb-18 -mt-8 flex-1 rounded-3xl bg-white px-6">
+      <View className="mb-18 -mt-8 flex-1 justify-between rounded-3xl bg-white px-6">
         <View className="mb-24 mt-8">
           <View className="mb-4">
             <Text className="font-heading text-base">Nome</Text>
