@@ -1,8 +1,8 @@
 import { Text, View, Image } from 'react-native'
 import PositivePNG from '@assets/Positive.png'
-import { Button } from '@components/Button'
-import { Plus } from 'phosphor-react-native'
 import { useNavigation } from '@react-navigation/native'
+import { ButtonRoot } from '@components/Button/ButtonRoot'
+import { ButtonTitle } from '@components/Button/ButtonTitle'
 export function Inside() {
   const { navigate } = useNavigation()
   return (
@@ -18,12 +18,9 @@ export function Inside() {
       </View>
       <View className="mt-4 justify-between">
         <Image source={PositivePNG} alt="Imagem de sucesso" />
-        <Button
-          className="mt-4"
-          icon={Plus}
-          title="Ir para a página inicial"
-          onPress={() => navigate('home')}
-        />
+        <ButtonRoot className="mt-4" onPress={() => navigate('home')}>
+          <ButtonTitle title="Ir para a página inicial" />
+        </ButtonRoot>
       </View>
     </View>
   )

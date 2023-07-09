@@ -14,15 +14,8 @@ export function Header({
 }: HeaderProps) {
   const insets = useSafeAreaInsets()
   const paddingTop = insets.top + 20
-  const { goBack } = useNavigation()
-  function colorsType(color: string) {
-    const typesColor = {
-      standard: `${colors.gray[600]}`,
-      inside: `${colors.green[500]}`,
-      outside: `${colors.red[500]}`,
-    }
-    return typesColor[color]
-  }
+  const { navigate } = useNavigation()
+
   return (
     <View
       className={clsx('h-32 w-full flex-row  bg-gray-500  px-4 ', {
@@ -31,8 +24,8 @@ export function Header({
       })}
       style={{ paddingTop }}
     >
-      <TouchableOpacity onPress={() => goBack()}>
-        <ArrowLeft size={30} weight="bold" color={colorsType('standard')} />
+      <TouchableOpacity onPress={() => navigate('home')}>
+        <ArrowLeft size={30} weight="bold" color={colors.gray[800]} />
       </TouchableOpacity>
       <View className="flex-1">
         <Text className="text-center font-heading text-2xl">{title}</Text>

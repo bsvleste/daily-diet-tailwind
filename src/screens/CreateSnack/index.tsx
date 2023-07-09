@@ -1,18 +1,28 @@
 import { useState } from 'react'
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import { Header } from '@components/Header'
-import { Circle, Plus } from 'phosphor-react-native'
+import { Circle } from 'phosphor-react-native'
 import colors from 'tailwindcss/colors'
-import { Button } from '@components/Button'
 import clsx from 'clsx'
 import { useNavigation } from '@react-navigation/native'
-export function Snack() {
+import { ButtonRoot } from '@components/Button/ButtonRoot'
+import { ButtonTitle } from '@components/Button/ButtonTitle'
+import { createSnackStorage } from '@storage/storageSnack/createSnackStorage'
+export function CreateSnack() {
   const { navigate } = useNavigation()
   const [transactionType, setTransactionType] = useState('positive')
   function handleSelectTransactionType(type: 'positive' | 'negative') {
     setTransactionType(type)
   }
-  function handleNavigation() {
+  async function handleNavigation() {
+    await createSnackStorage({
+      id: '3',
+      food: 'Pão na chapa',
+      hour: '13:00',
+      status: 'outside',
+      created_at: '21/06/2023',
+      description: 'Almoço de buteco com arroz, feijao e salada',
+    })
     if (transactionType === 'positive') {
       navigate('inside')
     } else {
@@ -23,10 +33,6 @@ export function Snack() {
     <View className="flex-1">
       <Header />
       <View className="mb-18 -mt-8 flex-1 rounded-3xl bg-white px-6">
-        {/* <ScrollView
-          contentContainerStyle={{ flexGrow: 1 }}
-          showsVerticalScrollIndicator={false}
-        > */}
         <View className="mb-24 mt-8">
           <View className="mb-4">
             <Text className="font-heading text-base">Nome</Text>
@@ -40,7 +46,6 @@ export function Snack() {
               textAlignVertical="top"
             />
           </View>
-
           <View className="flex-grow flex-row justify-between">
             <View className="w-36">
               <Text className="font-heading text-base">Data</Text>
@@ -84,13 +89,10 @@ export function Snack() {
               <Text className="ml-2 font-heading text-base">Não</Text>
             </TouchableOpacity>
           </View>
-          <Button
-            icon={Plus}
-            title="Cadastrar Refeição"
-            onPress={handleNavigation}
-          />
+          <ButtonRoot onPress={handleNavigation}>
+            <ButtonTitle title="Cadastrar Refeição" />
+          </ButtonRoot>
         </View>
-        {/*  </ScrollView> */}
       </View>
     </View>
   )

@@ -1,5 +1,16 @@
 /* eslint-disable no-undef */
-import { Text, TouchableOpacity, TouchableOpacityProps } from 'react-native'
+
+import { ButtonIcon } from './ButtonIcon'
+import { ButtonRoot } from './ButtonRoot'
+import { ButtonTitle } from './ButtonTitle'
+
+export const Button = {
+  Root: ButtonRoot,
+  Icon: ButtonIcon,
+  Title: ButtonTitle,
+}
+
+/* import { Text, TouchableOpacity, TouchableOpacityProps } from 'react-native'
 import { IconProps } from 'phosphor-react-native'
 import clsx from 'clsx'
 import colors from 'tailwindcss/colors'
@@ -44,3 +55,4 @@ export function Button({
     </TouchableOpacity>
   )
 }
+ */
