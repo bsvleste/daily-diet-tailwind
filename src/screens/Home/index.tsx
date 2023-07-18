@@ -63,6 +63,7 @@ export function Home() {
       handleFecthSnack()
     }, []),
   )
+
   return (
     <Container>
       <View className="flex-row items-center justify-between">

@@ -5,8 +5,13 @@ import { Modal, View, Text } from 'react-native'
 interface ModalProps {
   setModalIsVisible: () => void
   isOpen: boolean
+  handleDeletSnack: () => void
 }
-export function DeletModal({ setModalIsVisible, isOpen }: ModalProps) {
+export function DeletModal({
+  setModalIsVisible,
+  isOpen,
+  handleDeletSnack,
+}: ModalProps) {
   const [modalVisible, setModalVisible] = useState(isOpen)
 
   useEffect(() => {
@@ -36,7 +41,7 @@ export function DeletModal({ setModalIsVisible, isOpen }: ModalProps) {
             >
               <ButtonTitle background="secundary" title="Cancelar" />
             </ButtonRoot>
-            <ButtonRoot className="mt-4 w-36">
+            <ButtonRoot className="mt-4 w-36" onPress={handleDeletSnack}>
               <ButtonTitle title="Sim, Excluir" />
             </ButtonRoot>
           </View>

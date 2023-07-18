@@ -9,7 +9,6 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import { ButtonRoot } from '@components/Button/ButtonRoot'
 import { ButtonTitle } from '@components/Button/ButtonTitle'
 import DateTimePicker from '@react-native-community/datetimepicker'
-import { SnackDTO } from '@dtos/SnackDTO'
 import { getSnackById } from '@storage/storageSnack/getSnackById'
 import { Loading } from '@components/Loading'
 import { editSnackStorage } from '@storage/storageSnack/editSnackStorage'
@@ -102,8 +101,8 @@ export function EditSnack() {
       {isLoading ? (
         <Loading />
       ) : (
-        <View className="mb-18 -mt-8 flex-1 rounded-3xl bg-white px-6">
-          <View className="mb-24 mt-8">
+        <View className="-mt-8 flex-1 justify-between rounded-3xl bg-white px-6">
+          <View className="mt-8 h-full justify-between">
             <View className="mb-4">
               <Text className="font-heading text-base">Nome</Text>
               <TextInput
@@ -111,82 +110,88 @@ export function EditSnack() {
                 onChangeText={setFood}
                 value={food}
               />
-            </View>
-            <View className="mb-4">
-              <Text className="font-heading text-base">Descrição</Text>
-              <TextInput
-                className="h-24 rounded-lg border-2 border-gray-400 p-4  align-top text-base"
-                multiline
-                textAlignVertical="top"
-                onChangeText={setDescription}
-                value={description}
-              />
-            </View>
-            <View className="flex-grow flex-row justify-between">
-              <View className="w-36">
-                <Text className="font-heading text-base">Data</Text>
-                <TouchableOpacity
-                  onPressIn={showDatepicker}
-                  className="h-14 items-center justify-center rounded-lg border-2 border-gray-400 p-4 text-base"
-                >
-                  <Text>{created_at}</Text>
-                </TouchableOpacity>
+
+              <View className="mb-4">
+                <Text className="font-heading text-base">Descrição</Text>
+                <TextInput
+                  className="h-24 rounded-lg border-2 border-gray-400 p-4  align-top text-base"
+                  multiline
+                  textAlignVertical="top"
+                  onChangeText={setDescription}
+                  value={description}
+                />
               </View>
-              <View className="w-36">
-                {show && (
-                  <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date}
-                    mode={mode}
-                    is24Hour={true}
-                    onChange={onChange}
-                  />
-                )}
-                <Text className="font-heading text-base">Hora</Text>
-                <TouchableOpacity
-                  onPressIn={showTimepicker}
-                  className="h-14 items-center justify-center rounded-lg border-2 border-gray-400 p-4 text-base"
-                >
-                  <Text>{hour}</Text>
-                </TouchableOpacity>
+              <View className="flex-row justify-between">
+                <View className="w-36">
+                  <Text className="font-heading text-base">Data</Text>
+                  <TouchableOpacity
+                    onPressIn={showDatepicker}
+                    className="h-14 items-center justify-center rounded-lg border-2 border-gray-400 p-4 text-base"
+                  >
+                    <Text>{created_at}</Text>
+                  </TouchableOpacity>
+                </View>
+                <View className="w-36">
+                  {show && (
+                    <DateTimePicker
+                      testID="dateTimePicker"
+                      value={date}
+                      mode={mode}
+                      is24Hour={true}
+                      onChange={onChange}
+                    />
+                  )}
+                  <Text className="font-heading text-base">Hora</Text>
+                  <TouchableOpacity
+                    onPressIn={showTimepicker}
+                    className="h-14 items-center justify-center rounded-lg border-2 border-gray-400 p-4 text-base"
+                  >
+                    <Text>{hour.slice(0, 5)}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              <View className="mt-2 ">
+                <Text className="mt-4 font-heading text-base">
+                  Está dentro da dieta?
+                </Text>
+                <View className="mb-8  flex-grow flex-row justify-between">
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={() => handleSelectTransactionType('inside')}
+                    className={clsx(
+                      'h-14 w-36 flex-row items-center justify-center rounded-lg bg-gray-400',
+                      {
+                        'border-2 border-green-500 bg-green-100':
+                          transactionType === 'inside',
+                      },
+                    )}
+                  >
+                    <Circle size={12} weight="fill" color={colors.green[500]} />
+                    <Text className="ml-2 font-heading text-base">Sim</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={() => handleSelectTransactionType('outside')}
+                    className={clsx(
+                      'h-14 w-36 flex-row items-center justify-center rounded-lg bg-gray-400',
+                      {
+                        'border-2 border-red-500 bg-red-100':
+                          transactionType === 'outside',
+                      },
+                    )}
+                  >
+                    <Circle size={12} weight="fill" color={colors.red[500]} />
+                    <Text className="ml-2 font-heading text-base">Não</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-            <Text className="mt-4 font-heading text-base">
-              Está dentro da dieta?
-            </Text>
-            <View className="mb-8  flex-grow flex-row justify-between">
-              <TouchableOpacity
-                activeOpacity={0.7}
-                onPress={() => handleSelectTransactionType('inside')}
-                className={clsx(
-                  'h-14 w-36 flex-row items-center justify-center rounded-lg bg-gray-400',
-                  {
-                    'border-2 border-green-500 bg-green-100':
-                      transactionType === 'inside',
-                  },
-                )}
-              >
-                <Circle size={12} weight="fill" color={colors.green[500]} />
-                <Text className="ml-2 font-heading text-base">Sim</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.7}
-                onPress={() => handleSelectTransactionType('outside')}
-                className={clsx(
-                  'h-14 w-36 flex-row items-center justify-center rounded-lg bg-gray-400',
-                  {
-                    'border-2 border-red-500 bg-red-100':
-                      transactionType === 'outside',
-                  },
-                )}
-              >
-                <Circle size={12} weight="fill" color={colors.red[500]} />
-                <Text className="ml-2 font-heading text-base">Não</Text>
-              </TouchableOpacity>
+            <View>
+              <ButtonRoot onPress={handleNavigation} className="mb-20">
+                <ButtonTitle title="Cadastrar Refeição" />
+              </ButtonRoot>
             </View>
-            <ButtonRoot onPress={handleNavigation}>
-              <ButtonTitle title="Salvar Alterações" />
-            </ButtonRoot>
           </View>
         </View>
       )}

@@ -12,9 +12,12 @@ import colors from 'tailwindcss/colors'
 import { getSnackById } from '@storage/storageSnack/getSnackById'
 import { SnackDTO } from '@dtos/SnackDTO'
 import { Loading } from '@components/Loading'
+import { deletSnackStorage } from '@storage/storageSnack/deleteSnackStorage'
+import { AppError } from '@utils/AppError'
 interface RouteParamsInfoSnack {
   snackId: string
 }
+
 export function InfoSnack() {
   const route = useRoute()
   const { navigate } = useNavigation()
@@ -24,6 +27,18 @@ export function InfoSnack() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   function togleModal() {
     setIsModalOpen(!isModalOpen)
+  }
+  async function deleteSnack() {
+    try {
+      setIsLoading(true)
+      await deletSnackStorage(snackId)
+      navigate('home')
+    } catch (error) {
+      setIsLoading(true)
+      throw new AppError('Não foi possivel deletar a refeição!')
+    } finally {
+      setIsLoading(false)
+    }
   }
   async function handleFecthSnackById() {
     try {
@@ -42,9 +57,13 @@ export function InfoSnack() {
   }, [snackId])
   return (
     <View className="flex-1  bg-white">
-      <DeletModal setModalIsVisible={togleModal} isOpen={isModalOpen} />
+      <DeletModal
+        setModalIsVisible={togleModal}
+        isOpen={isModalOpen}
+        handleDeletSnack={deleteSnack}
+      />
       <Header
-        bg={snackId === 'inside' ? 'inside' : 'outside'}
+        bg={snack.status === 'inside' ? 'inside' : 'outside'}
         title="Refeição"
       />
       {isLoading ? (
