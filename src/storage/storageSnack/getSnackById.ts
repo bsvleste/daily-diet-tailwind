@@ -1,7 +1,7 @@
 import { AppError } from '@utils/AppError'
 import { getAllSnack } from './getAllSnack'
 
-export async function getSnackByDay(id: string) {
+export async function getSnackById(id: string) {
   try {
     const storage = await getAllSnack()
     const snack = storage.filter((snackDay: any) => snackDay.id === id)

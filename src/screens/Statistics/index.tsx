@@ -65,7 +65,9 @@ export function Statistics() {
               />
             </TouchableOpacity>
             <View className="items-center justify-center">
-              <Text className="font-heading text-2xl">{percentage}%</Text>
+              <Text className="font-heading text-2xl">
+                {percentage?.toFixed()}%
+              </Text>
               <Text className="font-body ">das refeições dentro da dieta</Text>
             </View>
           </View>

@@ -9,7 +9,7 @@ import { Header } from '@components/Header'
 import { Circle, Pencil, Trash } from 'phosphor-react-native'
 import { Text, View } from 'react-native'
 import colors from 'tailwindcss/colors'
-import { getSnackByDay } from '@storage/storageSnack/getSnackByDay'
+import { getSnackById } from '@storage/storageSnack/getSnackById'
 import { SnackDTO } from '@dtos/SnackDTO'
 import { Loading } from '@components/Loading'
 interface RouteParamsInfoSnack {
@@ -28,7 +28,7 @@ export function InfoSnack() {
   async function handleFecthSnackById() {
     try {
       setIsLoading(true)
-      const response = await getSnackByDay(snackId)
+      const response = await getSnackById(snackId)
 
       setSnack(response[0])
     } catch (error) {
@@ -54,7 +54,7 @@ export function InfoSnack() {
           <View className="mt-8">
             <Text className="font-heading text-xl">{snack.food}</Text>
             <Text className="mt-4 font-body text-base">
-              Sanduíche de pão integral com atum e salada de alface e tomate
+              {snack.description}
             </Text>
             <Text className="mt-8 font-heading text-xl">Data e hora</Text>
             <Text className="mt-4 font-body text-base">
@@ -80,7 +80,10 @@ export function InfoSnack() {
             </View>
           </View>
           <View>
-            <ButtonRoot className="mb-4" onPress={() => navigate('edit_snack')}>
+            <ButtonRoot
+              className="mb-4"
+              onPress={() => navigate('edit_snack', { snackId })}
+            >
               <ButtonIcon icon={Pencil} />
               <ButtonTitle title="Editar Refeição" />
             </ButtonRoot>

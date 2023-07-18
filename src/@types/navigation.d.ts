@@ -11,7 +11,9 @@ export declare global {
       info_snack: {
         snackId: string
       }
-      edit_snack: undefined
+      edit_snack: {
+        snackId: string
+      }
     }
   }
 }

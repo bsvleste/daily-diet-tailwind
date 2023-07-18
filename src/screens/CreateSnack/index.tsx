@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, Platform } from 'react-native'
 import { Header } from '@components/Header'
 import { Circle } from 'phosphor-react-native'
 import colors from 'tailwindcss/colors'
@@ -8,26 +8,56 @@ import { useNavigation } from '@react-navigation/native'
 import { ButtonRoot } from '@components/Button/ButtonRoot'
 import { ButtonTitle } from '@components/Button/ButtonTitle'
 import { createSnackStorage } from '@storage/storageSnack/createSnackStorage'
+import DateTimePicker from '@react-native-community/datetimepicker'
+import uuid from 'react-native-uuid'
 export function CreateSnack() {
   const { navigate } = useNavigation()
-  const [transactionType, setTransactionType] = useState('positive')
-  function handleSelectTransactionType(type: 'positive' | 'negative') {
+  const [date, setDate] = useState(new Date())
+  const [mode, setMode] = useState('date')
+  const [show, setShow] = useState(false)
+  const [food, setFood] = useState('')
+  const [description, setDescription] = useState('')
+  const [transactionType, setTransactionType] = useState('inside')
+
+  function handleSelectTransactionType(type: 'inside' | 'outside') {
     setTransactionType(type)
   }
   async function handleNavigation() {
-    await createSnackStorage({
-      id: '3',
-      food: 'Pão na chapa',
-      hour: '13:00',
-      status: 'outside',
-      created_at: '21/06/2023',
-      description: 'Almoço de buteco com arroz, feijao e salada',
-    })
-    if (transactionType === 'positive') {
+    const data = {
+      id: uuid.v4(),
+      food,
+      hour: date.toLocaleTimeString().slice(0, 5),
+      status: transactionType,
+      created_at: date.toLocaleDateString(),
+      description,
+    }
+    // console.log('clicou')
+    await createSnackStorage(data)
+    if (transactionType === 'inside') {
       navigate('inside')
     } else {
       navigate('outside')
     }
+  }
+
+  const onChange = (event: any, selectedDate: any) => {
+    const currentDate = selectedDate || date
+
+    setDate(currentDate)
+    setShow(Platform.OS === 'ios')
+  }
+
+  const showMode = (currentMode: any) => {
+    setShow(true)
+    setMode(currentMode)
+  }
+
+  const showDatepicker = () => {
+    showMode('date')
+  }
+
+  const showTimepicker = () => {
+    showMode('time')
   }
   return (
     <View className="flex-1 ">
@@ -36,7 +66,11 @@ export function CreateSnack() {
         <View className="mb-24 mt-8">
           <View className="mb-4">
             <Text className="font-heading text-base">Nome</Text>
-            <TextInput className="h-14 rounded-lg border-2 border-gray-400 p-4 text-base" />
+            <TextInput
+              className="h-14 rounded-lg border-2 border-gray-400 p-4 text-base"
+              onChangeText={setFood}
+              value={food}
+            />
           </View>
           <View className="mb-4">
             <Text className="font-heading text-base">Descrição</Text>
@@ -44,16 +78,37 @@ export function CreateSnack() {
               className="h-24 rounded-lg border-2 border-gray-400 p-4  align-top text-base"
               multiline
               textAlignVertical="top"
+              onChangeText={setDescription}
+              value={description}
             />
           </View>
           <View className="flex-grow flex-row justify-between">
             <View className="w-36">
               <Text className="font-heading text-base">Data</Text>
-              <TextInput className="h-14 rounded-lg border-2 border-gray-400 p-4 text-base" />
+              <TouchableOpacity
+                onPressIn={showDatepicker}
+                className="h-14 items-center justify-center rounded-lg border-2 border-gray-400 p-4 text-base"
+              >
+                <Text>{date.toLocaleDateString()}</Text>
+              </TouchableOpacity>
             </View>
             <View className="w-36">
+              {show && (
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={date}
+                  mode={mode}
+                  is24Hour={true}
+                  onChange={onChange}
+                />
+              )}
               <Text className="font-heading text-base">Hora</Text>
-              <TextInput className="h-14 rounded-lg border-2 border-gray-400 p-4 text-base" />
+              <TouchableOpacity
+                onPressIn={showTimepicker}
+                className="h-14 items-center justify-center rounded-lg border-2 border-gray-400 p-4 text-base"
+              >
+                <Text>{date.toLocaleTimeString().slice(0, 5)}</Text>
+              </TouchableOpacity>
             </View>
           </View>
           <Text className="mt-4 font-heading text-base">
@@ -62,12 +117,12 @@ export function CreateSnack() {
           <View className="mb-8  flex-grow flex-row justify-between">
             <TouchableOpacity
               activeOpacity={0.7}
-              onPress={() => handleSelectTransactionType('positive')}
+              onPress={() => handleSelectTransactionType('inside')}
               className={clsx(
                 'h-14 w-36 flex-row items-center justify-center rounded-lg bg-gray-400',
                 {
                   'border-2 border-green-500 bg-green-100':
-                    transactionType === 'positive',
+                    transactionType === 'inside',
                 },
               )}
             >
@@ -76,12 +131,12 @@ export function CreateSnack() {
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.7}
-              onPress={() => handleSelectTransactionType('negative')}
+              onPress={() => handleSelectTransactionType('outside')}
               className={clsx(
                 'h-14 w-36 flex-row items-center justify-center rounded-lg bg-gray-400',
                 {
                   'border-2 border-red-500 bg-red-100':
-                    transactionType === 'negative',
+                    transactionType === 'outside',
                 },
               )}
             >
